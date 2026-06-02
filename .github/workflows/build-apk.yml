@@ -23,6 +23,9 @@ jobs:
           distribution: 'zulu'
           java-version: '17'
 
+      - name: 设置 Gradle
+        uses: gradle/actions/setup-gradle@v4
+
       - name: 生成签名密钥
         run: |
           keytool -genkey -v -keystore keystore.jks \
@@ -38,21 +41,8 @@ jobs:
           sed -i "s|http://192.168.31.1:2688|${{ github.event.inputs.app_url }}|g" \
             app/src/main/java/com/easyloan/app/MainActivity.kt
 
-      - name: 缓存 Gradle
-        uses: actions/cache@v4
-        with:
-          path: |
-            ~/.gradle/caches
-            ~/.gradle/wrapper
-          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}
-          restore-keys: |
-            ${{ runner.os }}-gradle-
-
-      - name: 授权 gradlew
-        run: chmod +x gradlew
-
       - name: 编译 APK
-        run: ./gradlew assembleRelease
+        run: gradle assembleRelease
         env:
           KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
           KEY_ALIAS: easyloan
