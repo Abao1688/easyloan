@@ -3,8 +3,6 @@ name: 编译 EasyLoan APK
 on:
   push:
     branches: [ main ]
-    paths:
-      - 'easyloan-app/**'
   workflow_dispatch:
     inputs:
       app_url:
@@ -15,9 +13,6 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: easyloan-app
 
     steps:
       - uses: actions/checkout@v4
@@ -67,5 +62,5 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: EasyLoan-APK
-          path: easyloan-app/app/build/outputs/apk/release/*.apk
+          path: app/build/outputs/apk/release/*.apk
           retention-days: 90
