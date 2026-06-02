@@ -25,6 +25,8 @@ jobs:
 
       - name: 设置 Gradle
         uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: "8.10"
 
       - name: 生成签名密钥
         run: |
