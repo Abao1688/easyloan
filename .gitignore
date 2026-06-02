@@ -1,0 +1,9 @@
+# EasyLoan Android App
+
+build/
+.gradle/
+local.properties
+*.iml
+.idea/
+.DS_Store
+keystore.jks
