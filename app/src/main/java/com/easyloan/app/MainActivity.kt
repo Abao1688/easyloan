@@ -22,7 +22,7 @@ import androidx.webkit.WebViewFeature
 class MainActivity : AppCompatActivity() {
 
     private lateinit var webView: WebView
-    private var appUrl = "http://192.168.31.1:2688"
+    private var appUrl = "http://175.178.90.28:2688"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
