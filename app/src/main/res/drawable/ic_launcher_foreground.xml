@@ -73,26 +73,4 @@
     <path
         android:fillColor="#22C55E"
         android:pathData="M71,30 L75,30 L75,45 L71,45 Z" />
-    <!-- Easy (green) text -->
-    <text
-        android:fillColor="#22C55E"
-        android:fontFamily="sans-serif"
-        android:fontStyle="bold"
-        android:text="Easy"
-        android:textSize="10sp"
-        android:x="40"
-        android:y="80" />
-    <!-- Loan (orange) text -->
-    <text
-        android:fillColor="#F97316"
-        android:fontFamily="sans-serif"
-        android:fontStyle="bold"
-        android:text="Loan"
-        android:textSize="10sp"
-        android:x="73"
-        android:y="80" />
-    <!-- Tagline divider lines -->
-    <path
-        android:fillColor="#22C55E"
-        android:pathData="M30,85 L38,85 M70,85 L78,85" />
 </vector>
