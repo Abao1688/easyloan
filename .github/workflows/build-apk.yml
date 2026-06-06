@@ -9,6 +9,10 @@ on:
         description: 'EasyLoan 服务器地址'
         required: false
         default: 'http://175.178.90.28:2688'
+      version_name:
+        description: '版本号 (如 1.1.0)'
+        required: false
+        default: '1.0.0'
 
 jobs:
   build:
@@ -28,14 +32,9 @@ jobs:
         with:
           gradle-version: "8.10"
 
-      - name: 生成签名密钥
+      - name: 解码签名密钥
         run: |
-          keytool -genkey -v -keystore keystore.jks \
-            -alias easyloan -keyalg RSA -keysize 2048 \
-            -validity 36500 \
-            -storepass "${{ secrets.KEYSTORE_PASSWORD }}" \
-            -keypass "${{ secrets.KEY_PASSWORD }}" \
-            -dname "CN=EasyLoan, OU=App, O=EasyLoan, L=Guangzhou, ST=Guangdong, C=CN"
+          echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 -d > keystore.jks
 
       - name: 替换服务器地址
         if: github.event.inputs.app_url != ''
@@ -49,10 +48,19 @@ jobs:
           KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
           KEY_ALIAS: easyloan
           KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
+          VERSION_CODE: ${{ github.run_number }}
+          VERSION_NAME: ${{ github.event.inputs.version_name || '1.0.0' }}
 
       - name: 上传 APK
         uses: actions/upload-artifact@v4
         with:
-          name: EasyLoan-APK
+          name: EasyLoan-APK-v${{ github.event.inputs.version_name || '1.0.0' }}
           path: app/build/outputs/apk/release/*.apk
+          retention-days: 90
+
+      - name: 上传签名密钥（留底）
+        uses: actions/upload-artifact@v4
+        with:
+          name: easyloan-keystore
+          path: keystore.jks
           retention-days: 90
